@@ -27,29 +27,29 @@ EOF
 
     cat >  ${SH_PATH}/IBMYes/test-cloudfoundry/test/config.json  << EOF
     {
-        "policy": null,
         "inbounds": [
-            {
-                "port": 8080,
-                "protocol": "vmess",
-                "settings": {
-                    "connectionReuse": true,
-                    "clients": [
-                        {
-                            "id": "${UUID}",
-                            "alterId": 4
-                        }
-                    ]
-                },
-                "streamSettings": {
-                    "network":"ws",
-                    "wsSettings": {
-                        "path": "${WSPATH}"
+        {
+            "port": 8080,
+            "protocol": "vmess",
+            "settings": {
+                "clients": [
+                    {
+                        "id": "${UUID}",
+                        "alterId": 64
                     }
-                }
+                ]
+            },
+            "streamSettings": {
+                "network":"ws"
             }
+          }
         ],
-        "outbounds": null
+        "outbounds": [
+            {
+              "protocol": "freedom",
+              "settings": {}
+            }
+        ]
     }
 EOF
     echo "配置为"
@@ -76,7 +76,7 @@ install(){
     ibmcloud cf push
     echo "安装完成。"
     echo "生成的随机 UUID：${UUID}"
-    echo "生成的随机 WebSocket路径：${WSPATH}"
+#    echo "生成的随机 WebSocket路径：${WSPATH}"
     VMESSCODE=$(base64 -w 0 << EOF
     {
       "v": "2",
