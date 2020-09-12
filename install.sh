@@ -13,7 +13,8 @@ create_mainfest_file(){
     echo "内存大小：${IBM_MEM_SIZE}"
     UUID=$(cat /proc/sys/kernel/random/uuid)
     echo "生成随机UUID：${UUID}"
-    WSPATH=$(head /dev/urandom | tr -dc A-Za-z0-9 | head -c 16)
+#    WSPATH=$(head /dev/urandom | tr -dc A-Za-z0-9 | head -c 16)
+    WSPATH="/v2ray"
     echo "生成随机WebSocket路径：${WSPATH}"
     
     cat >  ${SH_PATH}/IBMYes/test-cloudfoundry/manifest.yml  << EOF
@@ -26,11 +27,18 @@ EOF
 
     cat >  ${SH_PATH}/IBMYes/test-cloudfoundry/test/config.json  << EOF
     {
+        "policy": null,
+        "log": {
+          "access": "",
+          "error": "",
+          "loglevel": "debug"
+        },
         "inbounds": [
             {
-                "port": 8080,
+                "port": 443,
                 "protocol": "vmess",
                 "settings": {
+                    "connectionReuse": true,
                     "clients": [
                         {
                             "id": "${UUID}",
@@ -41,17 +49,12 @@ EOF
                 "streamSettings": {
                     "network":"ws",
                     "wsSettings": {
-                        "path": ""
+                        "path": "${WSPATH}"
                     }
                 }
             }
         ],
-        "outbounds": [
-            {
-                "protocol": "freedom",
-                "settings": {}
-            }
-        ]
+        "outbounds": null
     }
 EOF
     echo "配置完成。"
@@ -80,8 +83,8 @@ install(){
     VMESSCODE=$(base64 -w 0 << EOF
     {
       "v": "2",
-      "ps": "ibmyes",
-      "add": "ibmyes.us-south.cf.appdomain.cloud",
+      "ps": "${IBM_APP_NAME}",
+      "add": "${IBM_APP_NAME}.us-south.cf.appdomain.cloud",
       "port": "443",
       "id": "${UUID}",
       "aid": "4",
