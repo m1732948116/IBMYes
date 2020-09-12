@@ -30,7 +30,7 @@ EOF
         "policy": null,
         "inbounds": [
             {
-                "port": 8181,
+                "port": 8080,
                 "protocol": "vmess",
                 "settings": {
                     "connectionReuse": true,
@@ -52,6 +52,8 @@ EOF
         "outbounds": null
     }
 EOF
+    echo "配置为"
+    cat ${SH_PATH}/IBMYes/test-cloudfoundry/test/config.json
     echo "配置完成。"
 }
 
