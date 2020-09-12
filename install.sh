@@ -28,11 +28,6 @@ EOF
     cat >  ${SH_PATH}/IBMYes/test-cloudfoundry/test/config.json  << EOF
     {
         "policy": null,
-        "log": {
-          "access": "",
-          "error": "",
-          "loglevel": "debug"
-        },
         "inbounds": [
             {
                 "port": 8181,
