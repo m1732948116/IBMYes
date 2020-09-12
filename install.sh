@@ -25,7 +25,7 @@ create_mainfest_file(){
       memory: ${IBM_MEM_SIZE}M
 EOF
 
-    cat >  ${SH_PATH}/IBMYes/demo-cloudfoundry/demo/config.json  << EOF
+    cat >  ${SH_PATH}/IBMYes/demo-cloudfoundry/demo/test.json  << EOF
     {
         "inbounds": [
         {
@@ -53,7 +53,7 @@ EOF
     }
 EOF
     echo "配置为"
-    cat ${SH_PATH}/IBMYes/demo-cloudfoundry/demo/config.json
+    cat ${SH_PATH}/IBMYes/demo-cloudfoundry/demo/test.json
     echo "配置完成。"
 }
 
