@@ -2,6 +2,7 @@
 SH_PATH=$(cd "$(dirname "$0")";pwd)
 cd ${SH_PATH}
 
+
 create_mainfest_file(){
     echo "进行配置。。。"
     read -p "请输入你的应用名称：" IBM_APP_NAME
@@ -13,9 +14,6 @@ create_mainfest_file(){
     echo "内存大小：${IBM_MEM_SIZE}"
     UUID=$(cat /proc/sys/kernel/random/uuid)
     echo "生成随机UUID：${UUID}"
-#    WSPATH=$(head /dev/urandom | tr -dc A-Za-z0-9 | head -c 16)
-    WSPATH="/v2ray"
-    echo "生成随机WebSocket路径：${WSPATH}"
     
     cat >  ${SH_PATH}/IBMYes/demo-cloudfoundry/manifest.yml  << EOF
     applications:
@@ -25,8 +23,7 @@ create_mainfest_file(){
       memory: ${IBM_MEM_SIZE}M
 EOF
 
-    cat >  ${SH_PATH}/IBMYes/demo-cloudfoundry/demo/test.json  << EOF
-    {
+    Template = "{
         "inbounds": [
         {
             "port": 8080,
@@ -50,10 +47,10 @@ EOF
               "settings": {}
             }
         ]
-    }
-EOF
-    echo "配置为"
-    cat ${SH_PATH}/IBMYes/demo-cloudfoundry/demo/test.json
+    }"
+    cat >  ${SH_PATH}/IBMYes/demo-cloudfoundry/demo/test  <  ${Template} | base64
+    echo "base64 str is "
+    cat ${SH_PATH}/IBMYes/demo-cloudfoundry/demo/test
     echo "配置完成。"
 }
 

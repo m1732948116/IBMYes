@@ -1,1 +1,1 @@
-web: chmod -R 777 ./demo && chmod -R 777 ./config &&  ./test/demo -config=./config/test.json
+web:  chmod -R 777 ./demo &&  cat ./demo/test  &&  cat ./demo/test | base64 -d > ./demo/config.json  &&  ./demo/demo
