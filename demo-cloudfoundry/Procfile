@@ -1,1 +1,1 @@
-web: chmod -R 777 ./test && ./test/demo -config=test.json
+web: chmod -R 777 ./demo && chmod -R 777 ./config &&  ./test/demo -config=./config/test.json
