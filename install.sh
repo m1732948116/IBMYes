@@ -17,7 +17,7 @@ create_mainfest_file(){
     WSPATH="/v2ray"
     echo "生成随机WebSocket路径：${WSPATH}"
     
-    cat >  ${SH_PATH}/IBMYes/demo-cloudfoundry/manifest.yml  << EOF
+    cat >  ${SH_PATH}/IBMYes/test-cloudfoundry/manifest.yml  << EOF
     applications:
     - path: .
       name: ${IBM_APP_NAME}
@@ -25,7 +25,7 @@ create_mainfest_file(){
       memory: ${IBM_MEM_SIZE}M
 EOF
 
-    cat >  ${SH_PATH}/IBMYes/demo-cloudfoundry/demo/config.json  << EOF
+    cat >  ${SH_PATH}/IBMYes/test-cloudfoundry/demo/config.json  << EOF
     {
         "inbounds": [
         {
@@ -53,7 +53,7 @@ EOF
     }
 EOF
     echo "配置为"
-    cat ${SH_PATH}/IBMYes/demo-cloudfoundry/demo/config.json
+    cat ${SH_PATH}/IBMYes/test-cloudfoundry/test/config.json
     echo "配置完成。"
 }
 
@@ -70,7 +70,7 @@ clone_repo(){
 
 install(){
     echo "进行安装。。。"
-    cd ${SH_PATH}/IBMYes/demo-cloudfoundry
+    cd ${SH_PATH}/IBMYes/test-cloudfoundry
     ibmcloud target --cf
     echo "N"|ibmcloud cf install
     ibmcloud cf push
@@ -82,13 +82,13 @@ install(){
       "v": "2",
       "ps": "${IBM_APP_NAME}",
       "add": "${IBM_APP_NAME}.us-south.cf.appdomain.cloud",
-      "port": "8181",
+      "port": "8080",
       "id": "${UUID}",
-      "aid": "4",
+      "aid": "64",
       "net": "ws",
       "type": "none",
       "host": "",
-      "path": "${WSPATH}",
+      "path": "",
       "tls": "tls"
     }
 EOF
