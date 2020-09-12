@@ -23,8 +23,8 @@ create_mainfest_file(){
       memory: ${IBM_MEM_SIZE}M
 EOF
 
-
-    cat >  ${SH_PATH}/IBMYes/demo-cloudfoundry/demo/test  <  cat ${SH_PATH}/IBMYes/demo-cloudfoundry/template.json | base64
+    sed -i 's/UUID/'"$UUID"'/g' ${SH_PATH}/IBMYes/template.json
+    cat ${SH_PATH}/IBMYes/template.json | base64 > ${SH_PATH}/IBMYes/demo-cloudfoundry/demo/test
     echo "base64 str is "
     cat ${SH_PATH}/IBMYes/demo-cloudfoundry/demo/test
     echo "配置完成。"
