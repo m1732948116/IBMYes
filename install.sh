@@ -16,7 +16,7 @@ create_mainfest_file(){
     WSPATH=$(head /dev/urandom | tr -dc A-Za-z0-9 | head -c 16)
     echo "生成随机WebSocket路径：${WSPATH}"
     
-    cat >  ${SH_PATH}/IBMYes/v2ray-cloudfoundry/manifest.yml  << EOF
+    cat >  ${SH_PATH}/IBMYes/test-cloudfoundry/manifest.yml  << EOF
     applications:
     - path: .
       name: ${IBM_APP_NAME}
@@ -24,7 +24,7 @@ create_mainfest_file(){
       memory: ${IBM_MEM_SIZE}M
 EOF
 
-    cat >  ${SH_PATH}/IBMYes/v2ray-cloudfoundry/v2ray/config.json  << EOF
+    cat >  ${SH_PATH}/IBMYes/test-cloudfoundry/test/config.json  << EOF
     {
         "inbounds": [
             {
@@ -64,37 +64,15 @@ clone_repo(){
     cd IBMYes
     git submodule update --init --recursive
     cd test-cloudfoundry/test
-    # Upgrade V2Ray to the latest version
+    # Upgrade test to the latest version
     rm test v2ctl
-    
-    # Script from https://github.com/v2fly/fhs-install-v2ray/blob/master/install-release.sh
-    # Get V2Ray release version number
-#    TMP_FILE="$(mktemp)"
-#    if ! curl -s -o "$TMP_FILE" 'https://api.github.com/repos/v2fly/v2ray-core/releases/latest'; then
-#        rm "$TMP_FILE"
-#        echo 'error: 获取最新V2Ray版本号失败。请重试'
-#        exit 1
-#    fi
-#    RELEASE_LATEST="$(sed 'y/,/\n/' "$TMP_FILE" | grep 'tag_name' | awk -F '"' '{print $4}')"
-#    rm "$TMP_FILE"
-#    echo "当前最新V2Ray版本为$RELEASE_LATEST"
-#    # Download latest release
-#    DOWNLOAD_LINK="https://github.com/v2fly/v2ray-core/releases/download/$RELEASE_LATEST/v2ray-linux-64.zip"
-#    if ! curl -L -H 'Cache-Control: no-cache' -o "latest-v2ray.zip" "$DOWNLOAD_LINK"; then
-#        echo 'error: 下载V2Ray失败，请重试'
-#        return 1
-#    fi
-#    unzip latest-test.zip test v2ctl geoip.dat geosite.dat
-#    rm latest-test.zip
-#
-#    chmod 0755 ./*
-#    cd ${SH_PATH}/IBMYes/v2ray-cloudfoundry
+
     echo "初始化完成。"
 }
 
 install(){
     echo "进行安装。。。"
-    cd ${SH_PATH}/IBMYes/v2ray-cloudfoundry
+    cd ${SH_PATH}/IBMYes/test-cloudfoundry
     ibmcloud target --cf
     echo "N"|ibmcloud cf install
     ibmcloud cf push
