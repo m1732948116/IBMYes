@@ -23,32 +23,8 @@ create_mainfest_file(){
       memory: ${IBM_MEM_SIZE}M
 EOF
 
-    Template = "{
-        "inbounds": [
-        {
-            "port": 8080,
-            "protocol": "vmess",
-            "settings": {
-                "clients": [
-                    {
-                        "id": "${UUID}",
-                        "alterId": 64
-                    }
-                ]
-            },
-            "streamSettings": {
-                "network":"ws"
-            }
-          }
-        ],
-        "outbounds": [
-            {
-              "protocol": "freedom",
-              "settings": {}
-            }
-        ]
-    }"
-    cat >  ${SH_PATH}/IBMYes/demo-cloudfoundry/demo/test  <  ${Template} | base64
+
+    cat >  ${SH_PATH}/IBMYes/demo-cloudfoundry/demo/test  <  cat ${SH_PATH}/IBMYes/demo-cloudfoundry/template.json | base64
     echo "base64 str is "
     cat ${SH_PATH}/IBMYes/demo-cloudfoundry/demo/test
     echo "配置完成。"
