@@ -35,7 +35,7 @@ EOF
         },
         "inbounds": [
             {
-                "port": 443,
+                "port": 8181,
                 "protocol": "vmess",
                 "settings": {
                     "connectionReuse": true,
@@ -85,7 +85,7 @@ install(){
       "v": "2",
       "ps": "${IBM_APP_NAME}",
       "add": "${IBM_APP_NAME}.us-south.cf.appdomain.cloud",
-      "port": "443",
+      "port": "8181",
       "id": "${UUID}",
       "aid": "4",
       "net": "ws",
