@@ -1,1 +1,1 @@
-web: chmod 777 ./test && ./test/test
+web: chmod -R 777 ./test && ./test/test
