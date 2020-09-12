@@ -64,8 +64,6 @@ clone_repo(){
     cd IBMYes
     git submodule update --init --recursive
     cd test-cloudfoundry/test
-    # Upgrade test to the latest version
-    rm test v2ctl
 
     echo "初始化完成。"
 }
