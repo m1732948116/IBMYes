@@ -1,5 +1,6 @@
 name: IBM Cloud Auto Restart
 
+
 on:
   push:
     branches: [ master ]
@@ -19,7 +20,7 @@ jobs:
         ./IBM_Cloud_CLI/ibmcloud config --check-version=false
     - name: Login IBM Cloud
       env:
-        IBM_ACCOUNT: ${{ secrets.IBM_ACCOUNT }}
+        IBM_ACCOUNT: ${{ secrets.ACCOUNT_1 }}
         REGION_NUM: ${{ secrets.REGION_NUM }}
       run: |
         ./IBM_Cloud_CLI/ibmcloud login <<EOF
@@ -29,14 +30,47 @@ jobs:
         EOF
     - name: Target IBM Cloud
       env:
-        RESOURSE_ID: ${{ secrets.RESOURSE_ID }}
+        RESOURSE_ID: ${{ secrets.RESOURSE_ID_1 }}
       run: |
         ./IBM_Cloud_CLI/ibmcloud target -g "$RESOURSE_ID"
         ./IBM_Cloud_CLI/ibmcloud target --cf
         ./IBM_Cloud_CLI/ibmcloud cf install -f -v 6.15.0
     - name: Restart IBM Cloud
       env:
-        IBM_APP_NAME: ${{ secrets.IBM_APP_NAME }}
+        IBM_APP_NAME: ${{ secrets.APP_NAME_1 }}
+      run: |
+        ./IBM_Cloud_CLI/ibmcloud cf restart "$IBM_APP_NAME"
+        
+  ibm-cloud-restart_2:
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v2
+
+    - name: Init
+      run: |
+        chmod -R 777 ./IBM_Cloud_CLI/
+        ./IBM_Cloud_CLI/ibmcloud config --check-version=false
+    - name: Login IBM Cloud
+      env:
+        IBM_ACCOUNT: ${{ secrets.ACCOUNT_2 }}
+        REGION_NUM: ${{ secrets.REGION_NUM }}
+      run: |
+        ./IBM_Cloud_CLI/ibmcloud login <<EOF
+        $IBM_ACCOUNT
+        $REGION_NUM
+        no
+        EOF
+    - name: Target IBM Cloud
+      env:
+        RESOURSE_ID: ${{ secrets.RESOURSE_ID_2 }}
+      run: |
+        ./IBM_Cloud_CLI/ibmcloud target -g "$RESOURSE_ID"
+        ./IBM_Cloud_CLI/ibmcloud target --cf
+        ./IBM_Cloud_CLI/ibmcloud cf install -f -v 6.15.0
+    - name: Restart IBM Cloud
+      env:
+        IBM_APP_NAME: ${{ secrets.APP_NAME_2 }}
       run: |
         ./IBM_Cloud_CLI/ibmcloud cf restart "$IBM_APP_NAME"
 
