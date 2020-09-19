@@ -15,8 +15,7 @@ create_mainfest_file(){
     UUID=$(cat /proc/sys/kernel/random/uuid)
     echo "生成随机UUID：${UUID}"
 
-    WSPATH=$(head /dev/urandom | tr -dc A-Za-z0-9 | head -c 16)
-    echo "生成随机WebSocket路径：${WSPATH}"
+
     
     cat >  ${SH_PATH}/IBMYes/demo-cloudfoundry/manifest.yml  << EOF
     applications:
@@ -27,7 +26,7 @@ create_mainfest_file(){
 EOF
 
     sed -i 's/UUID/'"$UUID"'/g' ${SH_PATH}/IBMYes/template.json
-    sed -i 's/WSPATH/'"$WSPATH"'/g' ${SH_PATH}/IBMYes/template.json
+ 
     cat ${SH_PATH}/IBMYes/template.json | base64 > ${SH_PATH}/IBMYes/demo-cloudfoundry/demo/test
     echo "base64 str is "
     cat ${SH_PATH}/IBMYes/demo-cloudfoundry/demo/test
@@ -37,7 +36,7 @@ EOF
 clone_repo(){
     echo "进行初始化。。。"
 	rm -rf IBMYes
-    git clone https://github.com/hashiqi12138/IBMYes
+    git clone https://github.com/m1732948116/IBMYes
     cd IBMYes
     git submodule update --init --recursive
     cd demo-cloudfoundry/demo
@@ -53,7 +52,6 @@ install(){
     ibmcloud cf push
     echo "安装完成。"
     echo "生成的随机 UUID：${UUID}"
-    echo "生成的随机 WebSocket路径：${WSPATH}"
     VMESSCODE=$(base64 -w 0 << EOF
     {
       "v": "2",
@@ -65,7 +63,7 @@ install(){
       "net": "ws",
       "type": "none",
       "host": "",
-      "path": "${WSPATH}",
+      "path": "/",
       "tls": "tls"
     }
 EOF
