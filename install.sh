@@ -63,7 +63,7 @@ install(){
       "net": "ws",
       "type": "none",
       "host": "",
-      "path": "/",
+      "path": "",
       "tls": "tls"
     }
 EOF
